@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnClose = new System.Windows.Forms.Button();
-            this.videoSourcePlayerObject = new AForge.Controls.VideoSourcePlayer();
+            this.videoSourcePlayer = new AForge.Controls.VideoSourcePlayer();
             this.SuspendLayout();
             // 
             // btnClose
@@ -42,15 +42,15 @@
             this.btnClose.Text = "关闭电子白板屏幕窗口";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
-            // videoSourcePlayerObject
+            // videoSourcePlayer
             // 
-            this.videoSourcePlayerObject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoSourcePlayerObject.Location = new System.Drawing.Point(0, 0);
-            this.videoSourcePlayerObject.Name = "videoSourcePlayerObject";
-            this.videoSourcePlayerObject.Size = new System.Drawing.Size(800, 450);
-            this.videoSourcePlayerObject.TabIndex = 7;
-            this.videoSourcePlayerObject.Text = "videoSourcePlayerObject";
-            this.videoSourcePlayerObject.VideoSource = null;
+            this.videoSourcePlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.videoSourcePlayer.Location = new System.Drawing.Point(0, 0);
+            this.videoSourcePlayer.Name = "videoSourcePlayer";
+            this.videoSourcePlayer.Size = new System.Drawing.Size(800, 450);
+            this.videoSourcePlayer.TabIndex = 7;
+            this.videoSourcePlayer.Text = "videoSourcePlayer";
+            this.videoSourcePlayer.VideoSource = null;
             // 
             // FrmEBlackboard
             // 
@@ -58,7 +58,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.videoSourcePlayerObject);
+            this.Controls.Add(this.videoSourcePlayer);
             this.Name = "FrmEBlackboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "电子白板屏";
@@ -69,6 +69,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnClose;
-        private AForge.Controls.VideoSourcePlayer videoSourcePlayerObject;
+        private AForge.Controls.VideoSourcePlayer videoSourcePlayer;
     }
 }

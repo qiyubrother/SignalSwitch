@@ -13,15 +13,13 @@ using AForge.Video;
 using AForge.Controls;
 using AForge.Imaging;
 using AForge.Video.DirectShow;
+using System.Drawing.Imaging;
 
 namespace SignalSwitch
 {
     public partial class FrmMain : Form
     {
-        FilterInfoCollection videoDevices;
-        VideoCaptureDevice videoSourceTeacher;
-        VideoCaptureDevice videoSourceObject;
-        public int selectedDeviceIndex = 0;
+        VideoCaptureDevice videoSource;
 
         public FrmMain()
         {
@@ -31,6 +29,9 @@ namespace SignalSwitch
         FrmEBlackboard frmEBlackboard = new FrmEBlackboard();
         // 定义提示屏对象
         FrmPrompt frmPrompt = new FrmPrompt();
+
+        int cameraTeacherNum = 1;
+        int cameraObjectNum = 0;
 
         protected override void OnShown(EventArgs e)
         {
@@ -90,32 +91,33 @@ namespace SignalSwitch
             #region 初始化摄像头
             FilterInfoCollection videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);//摄像头实例对象
             int sumVideo = videoDevices.Count;//找到计算机所有的摄像头 数量 ,没有摄像头的话 就等于 0
-            int cameraTeacherNum = 0;
-            int cameraObjectNum = 1;
-
             videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            videoSourceTeacher = new VideoCaptureDevice(videoDevices[cameraTeacherNum].MonikerString);//连接摄像头。
-            videoSourceTeacher.VideoResolution = videoSourceTeacher.VideoCapabilities[cameraTeacherNum];
-            videoSourcePlayerTeacher.VideoSource = videoSourceTeacher;
-            // set NewFrame event handler
-            videoSourcePlayerTeacher.Start();
+            #endregion
 
-            videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            videoSourceObject = new VideoCaptureDevice(videoDevices[cameraObjectNum].MonikerString);//连接摄像头。
-            videoSourceObject.VideoResolution = videoSourceObject.VideoCapabilities[cameraObjectNum];
-            videoSourcePlayerObject.VideoSource = videoSourceObject;
-            // set NewFrame event handler
-            videoSourcePlayerObject.Start();
+            btnShowTeacher.Click += (o, ex) =>
+            {
+                frmEBlackboard.SetVideoSource(cameraTeacherNum);
+            };
 
+            btnShowObject.Click += (o, ex) => frmEBlackboard.SetVideoSource(cameraObjectNum);
+
+            #region 截屏
+            btnScreen2Bmp.Click += (o, ex) =>
+            {
+
+                //Bitmap bitmap = frmEBlackboard.Player.GetCurrentVideoFrame();
+                //string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ff") + ".jpg";
+                //bitmap.Save(@"d:\temp\" + fileName, ImageFormat.Jpeg);
+                //bitmap.Dispose();
+            };
             #endregion
         }
-
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
 
-            videoSourcePlayerTeacher.Stop();
-            videoSourcePlayerObject.Stop();
+            frmEBlackboard.CloseVideo();
+            frmEBlackboard.Dispose();
         }
     }
 }
