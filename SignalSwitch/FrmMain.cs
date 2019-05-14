@@ -94,24 +94,70 @@ namespace SignalSwitch
             videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             #endregion
 
+            #region 显示教师画像（1#摄像机）按钮
             btnShowTeacher.Click += (o, ex) =>
             {
+                frmEBlackboard.SetDataSource(VideoDataSource.Camera);
                 frmEBlackboard.SetVideoSource(cameraTeacherNum);
             };
+            #endregion
+            #region 显示实物摄像头按钮
+            btnShowObject.Click += (o, ex) =>
+            {
+                frmEBlackboard.SetDataSource(VideoDataSource.Camera);
+                frmEBlackboard.SetVideoSource(cameraObjectNum);
+            };
+            #endregion
+            #region 显示到提示屏按钮
+            btnShowPrompt.Click += (o, ex) =>
+            {
+                frmPrompt.EnableCapturesScreen = true;
+                frmEBlackboard.SetDataSource(VideoDataSource.Bitmap);
 
-            btnShowObject.Click += (o, ex) => frmEBlackboard.SetVideoSource(cameraObjectNum);
 
+                //var g = frmPrompt.CreateGraphics();
+                //Rectangle rect = new Rectangle();
+                //rect = Screen.GetWorkingArea(this);
+                //var image = new Bitmap(rect.Width, rect.Height, g);
+                frmPrompt.EnableCapturesScreen = true;
+                frmPrompt.OnCapturesScreen += (i, ex2) =>
+                {
+                    frmEBlackboard.SetImage(i);
+                };
+
+                
+            };
+            #endregion
+
+            #region 画中画
+            btnPictureInPicture.Click += (s, ex)=> 
+            {
+                if (btnPictureInPicture.Tag == null || btnPictureInPicture.Tag.ToString() == "Disable")
+                {
+                    btnPictureInPicture.Text = "关闭画中画";
+                    btnPictureInPicture.Tag = "Enable";
+                    frmEBlackboard.EnablePictureInPicture(1);
+                }
+                else
+                {
+                    btnPictureInPicture.Text = "打开画中画";
+                    btnPictureInPicture.Tag = "Disable";
+                    frmEBlackboard.DisablePictureInPicture();
+                }
+            };
+            #endregion
             #region 截屏
             btnScreen2Bmp.Click += (o, ex) =>
             {
 
-                //Bitmap bitmap = frmEBlackboard.Player.GetCurrentVideoFrame();
-                //string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ff") + ".jpg";
-                //bitmap.Save(@"d:\temp\" + fileName, ImageFormat.Jpeg);
-                //bitmap.Dispose();
+                Bitmap bitmap = frmEBlackboard.Player.GetCurrentVideoFrame();
+                string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ff") + ".jpg";
+                bitmap.Save(@"d:\temp\" + fileName, ImageFormat.Jpeg);
+                bitmap.Dispose();
             };
             #endregion
         }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
