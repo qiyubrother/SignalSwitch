@@ -22,7 +22,27 @@ namespace SignalSwitch
         {
             base.OnShown(e);
 
-            //OnCapturesScreen += FormCapture;
+            btnClose.Click += (object sender, EventArgs e2) => Application.Exit();
+            btnFullScreen.Click += (s, e2) =>
+            {
+                ShowInTaskbar = false;
+                MaximizeBox = false;
+                MinimizeBox = false;
+                Text = string.Empty;
+                ControlBox = false;
+                BackColor = Color.DimGray;
+                WindowState = FormWindowState.Maximized;
+            };
+            btnExitFullScreen.Click += (s, e2) =>
+            {
+                ShowInTaskbar = true;
+                MaximizeBox = false;
+                MinimizeBox = false;
+                Text = string.Empty;
+                ControlBox = true;
+                BackColor = Color.DimGray;
+                WindowState = FormWindowState.Normal;
+            };
         }
 
         private void FormCapture(Bitmap image, EventArgs e)
@@ -33,14 +53,22 @@ namespace SignalSwitch
             image = new Bitmap(rect.Width, rect.Height, g);
         }
 
+        SolidBrush sb = new SolidBrush(Color.Blue);
+        PointF p = new PointF(100, 100);
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (OnCapturesScreen != null) {
-                var g = this.CreateGraphics();
-                Rectangle rect = new Rectangle();
-                rect = Screen.GetWorkingArea(this);
-                var image = new Bitmap(rect.Width, rect.Height, g);
-                OnCapturesScreen(image, null);
+                var width = Width;
+                var height = Height;
+                var xOffset = Left + 3;
+                var yOffset = Top + 15;
+                var bitmap = new Bitmap(width, height);
+                Graphics g = Graphics.FromImage(bitmap);
+                //g.CopyFromScreen((new System.Drawing.Point(xOffset, yOffset)), new System.Drawing.Point(0, 0), bitmap.Size);
+                g.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height));
+                g.Dispose();
+
+                OnCapturesScreen(bitmap, null);
             }
         }
 

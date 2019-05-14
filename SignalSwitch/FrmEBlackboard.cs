@@ -37,7 +37,8 @@ namespace SignalSwitch
             MainPanel.Dock = DockStyle.Fill;
             videoSourcePlayer.Dock = DockStyle.Fill;
             videoSourcePlayerSmallWindow.Visible = false;
-
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             if (videoSourcePlayer.IsRunning)
             {
                 //拍照完成后关摄像头并刷新同时关窗体
@@ -138,11 +139,7 @@ namespace SignalSwitch
             }
         }
 
-        public void SetImage(Bitmap image)
-        {
-            image.Save(@"d:\temp\" + $"{DateTime.Now.ToString("PMPT-yyyy-MM-dd-HH-mm-ss-fff")}.jpg", ImageFormat.Jpeg);
-            pictureBox1.Image = image;
-        }
+        public void SetImage(Bitmap image) => pictureBox1.Image = image;
     }
 
     public enum VideoDataSourceType

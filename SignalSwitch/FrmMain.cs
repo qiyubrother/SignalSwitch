@@ -68,6 +68,8 @@ namespace SignalSwitch
             ControlBox = false;
             BackColor = Color.DimGray;
             WindowState = FormWindowState.Maximized;
+            this.TopMost = false;
+            frmPrompt.TopMost = true;
             #region 调试用代码
             btnClose.BackColor = Color.Red;
             btnClose.ForeColor = Color.Yellow;
@@ -114,18 +116,11 @@ namespace SignalSwitch
                 frmPrompt.EnableCapturesScreen = true;
                 frmEBlackboard.SetDataSourceType(VideoDataSourceType.Bitmap);
 
-
-                //var g = frmPrompt.CreateGraphics();
-                //Rectangle rect = new Rectangle();
-                //rect = Screen.GetWorkingArea(this);
-                //var image = new Bitmap(rect.Width, rect.Height, g);
                 frmPrompt.EnableCapturesScreen = true;
                 frmPrompt.OnCapturesScreen += (i, ex2) =>
                 {
                     frmEBlackboard.SetImage(i);
                 };
-
-                
             };
             #endregion
 
