@@ -56,6 +56,10 @@ namespace SignalSwitch
             #endregion
         }
 
+        /// <summary>
+        /// 指定视频源并显示
+        /// </summary>
+        /// <param name="index"></param>
         public void SetVideoSource(int index)
         {
             videoSourcePlayer.SignalToStop();
@@ -67,6 +71,10 @@ namespace SignalSwitch
             videoSourcePlayer.Start();
         }
 
+        /// <summary>
+        /// 显示画中画
+        /// </summary>
+        /// <param name="index"></param>
         public void EnablePictureInPicture(int index)
         {
             videoSourcePlayerSmallWindow.Visible = true;
@@ -79,6 +87,9 @@ namespace SignalSwitch
             videoSourcePlayerSmallWindow.Start();
         }
 
+        /// <summary>
+        /// 禁止画中画
+        /// </summary>
         public void DisablePictureInPicture()
         {
             if (videoSourcePlayerSmallWindow != null && videoSourcePlayerSmallWindow.IsRunning)
@@ -89,6 +100,9 @@ namespace SignalSwitch
             videoSourcePlayerSmallWindow.Visible = false;
         }
 
+        /// <summary>
+        /// 关闭视频采集
+        /// </summary>
         public void CloseVideo()
         {
             if (videoSourcePlayer != null && videoSourcePlayer.IsRunning)
@@ -106,14 +120,18 @@ namespace SignalSwitch
 
         public VideoSourcePlayer Player { get => videoSourcePlayer; set=> videoSourcePlayer = value; }
 
-        public void SetDataSource(VideoDataSource source)
+        /// <summary>
+        /// 指定视频源类型
+        /// </summary>
+        /// <param name="sourceType"></param>
+        public void SetDataSourceType(VideoDataSourceType sourceType)
         {
-            if (source == VideoDataSource.Camera)
+            if (sourceType == VideoDataSourceType.Camera)
             {
                 MainPanel.Visible = false;
                 videoSourcePlayer.Visible = true;
             }
-            else if (source == VideoDataSource.Bitmap)
+            else if (sourceType == VideoDataSourceType.Bitmap)
             {
                 MainPanel.Visible = true;
                 videoSourcePlayer.Visible = false;
@@ -127,7 +145,7 @@ namespace SignalSwitch
         }
     }
 
-    public enum VideoDataSource
+    public enum VideoDataSourceType
     {
         Bitmap,
         Camera

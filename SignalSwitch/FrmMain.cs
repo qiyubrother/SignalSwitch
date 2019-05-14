@@ -97,14 +97,14 @@ namespace SignalSwitch
             #region 显示教师画像（1#摄像机）按钮
             btnShowTeacher.Click += (o, ex) =>
             {
-                frmEBlackboard.SetDataSource(VideoDataSource.Camera);
+                frmEBlackboard.SetDataSourceType(VideoDataSourceType.Camera);
                 frmEBlackboard.SetVideoSource(cameraTeacherNum);
             };
             #endregion
             #region 显示实物摄像头按钮
             btnShowObject.Click += (o, ex) =>
             {
-                frmEBlackboard.SetDataSource(VideoDataSource.Camera);
+                frmEBlackboard.SetDataSourceType(VideoDataSourceType.Camera);
                 frmEBlackboard.SetVideoSource(cameraObjectNum);
             };
             #endregion
@@ -112,7 +112,7 @@ namespace SignalSwitch
             btnShowPrompt.Click += (o, ex) =>
             {
                 frmPrompt.EnableCapturesScreen = true;
-                frmEBlackboard.SetDataSource(VideoDataSource.Bitmap);
+                frmEBlackboard.SetDataSourceType(VideoDataSourceType.Bitmap);
 
 
                 //var g = frmPrompt.CreateGraphics();
