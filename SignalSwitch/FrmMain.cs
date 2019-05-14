@@ -20,6 +20,7 @@ namespace SignalSwitch
     public partial class FrmMain : Form
     {
         VideoCaptureDevice videoSource;
+        public FormCaptureEventHandler OnCapturesScreen;
 
         public FrmMain()
         {
@@ -110,13 +111,26 @@ namespace SignalSwitch
                 frmEBlackboard.SetVideoSource(cameraObjectNum);
             };
             #endregion
+
+            #region 显示主控屏
+            btnShowMainScreen.Click += (o, ex) =>
+            {
+                EnableCapturesScreen = true;
+                frmEBlackboard.SetDataSourceType(VideoDataSourceType.Bitmap);
+
+                OnCapturesScreen += (i, ex2) =>
+                {
+                    frmEBlackboard.SetImage(i);
+                };
+            };
+            #endregion
             #region 显示到提示屏按钮
             btnShowPrompt.Click += (o, ex) =>
             {
+                EnableCapturesScreen = false;
                 frmPrompt.EnableCapturesScreen = true;
                 frmEBlackboard.SetDataSourceType(VideoDataSourceType.Bitmap);
 
-                frmPrompt.EnableCapturesScreen = true;
                 frmPrompt.OnCapturesScreen += (i, ex2) =>
                 {
                     frmEBlackboard.SetImage(i);
@@ -159,6 +173,43 @@ namespace SignalSwitch
 
             frmEBlackboard.CloseVideo();
             frmEBlackboard.Dispose();
+        }
+
+        private void FormCapture(Bitmap image, EventArgs e)
+        {
+            var g = this.CreateGraphics();
+            Rectangle rect = new Rectangle();
+            rect = Screen.GetWorkingArea(this);
+            image = new Bitmap(rect.Width, rect.Height, g);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (OnCapturesScreen != null)
+            {
+                var width = Width;
+                var height = Height;
+                var xOffset = Left + 3;
+                var yOffset = Top + 15;
+                var bitmap = new Bitmap(width, height);
+                Graphics g = Graphics.FromImage(bitmap);
+                //g.CopyFromScreen((new System.Drawing.Point(xOffset, yOffset)), new System.Drawing.Point(0, 0), bitmap.Size);
+                g.CopyFromScreen(new System.Drawing.Point(0, 0), new System.Drawing.Point(0, 0), new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height));
+                g.Dispose();
+
+                OnCapturesScreen(bitmap, null);
+            }
+        }
+        public bool EnableCapturesScreen
+        {
+            get => timer1.Enabled;
+            set
+            {
+                if (!value)
+                    timer1.Stop();
+                else
+                    timer1.Start();
+            }
         }
     }
 }

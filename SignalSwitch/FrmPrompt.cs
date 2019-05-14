@@ -53,8 +53,6 @@ namespace SignalSwitch
             image = new Bitmap(rect.Width, rect.Height, g);
         }
 
-        SolidBrush sb = new SolidBrush(Color.Blue);
-        PointF p = new PointF(100, 100);
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (OnCapturesScreen != null) {

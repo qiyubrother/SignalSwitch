@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            this.btnShowMainScreen = new System.Windows.Forms.Button();
             this.btnShowPrompt = new System.Windows.Forms.Button();
             this.btnShowTeacher = new System.Windows.Forms.Button();
             this.btnShowObject = new System.Windows.Forms.Button();
@@ -36,16 +37,17 @@
             this.btnScreen2Bmp = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPictureInPicture = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // button1
+            // btnShowMainScreen
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(145, 40);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "显示主控屏画面";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnShowMainScreen.Location = new System.Drawing.Point(12, 12);
+            this.btnShowMainScreen.Name = "btnShowMainScreen";
+            this.btnShowMainScreen.Size = new System.Drawing.Size(145, 40);
+            this.btnShowMainScreen.TabIndex = 0;
+            this.btnShowMainScreen.Text = "显示主控屏画面";
+            this.btnShowMainScreen.UseVisualStyleBackColor = true;
             // 
             // btnShowPrompt
             // 
@@ -113,6 +115,10 @@
             this.btnPictureInPicture.Text = "打开画中画";
             this.btnPictureInPicture.UseVisualStyleBackColor = true;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -125,7 +131,7 @@
             this.Controls.Add(this.btnShowObject);
             this.Controls.Add(this.btnShowTeacher);
             this.Controls.Add(this.btnShowPrompt);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnShowMainScreen);
             this.Name = "FrmMain";
             this.Text = "主程序画面";
             this.ResumeLayout(false);
@@ -134,7 +140,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnShowMainScreen;
         private System.Windows.Forms.Button btnShowPrompt;
         private System.Windows.Forms.Button btnShowTeacher;
         private System.Windows.Forms.Button btnShowObject;
@@ -142,6 +148,7 @@
         private System.Windows.Forms.Button btnScreen2Bmp;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnPictureInPicture;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
