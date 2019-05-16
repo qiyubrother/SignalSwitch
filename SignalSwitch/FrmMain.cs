@@ -115,6 +115,7 @@ namespace SignalSwitch
             #region 显示主控屏
             btnShowMainScreen.Click += (o, ex) =>
             {
+                frmPrompt.EnableCapturesScreen = false;
                 EnableCapturesScreen = true;
                 frmEBlackboard.SetDataSourceType(VideoDataSourceType.Bitmap);
 
@@ -187,17 +188,17 @@ namespace SignalSwitch
         {
             if (OnCapturesScreen != null)
             {
-                var width = Width;
-                var height = Height;
-                var xOffset = Left + 3;
-                var yOffset = Top + 15;
+                var width = pnlMain.Width;
+                var height = pnlMain.Height;
+                var xOffset = Left + pnlMain.Left + 3 + 6;
+                var yOffset = Top + pnlMain.Top + 15 + 4;
                 var bitmap = new Bitmap(width, height);
                 Graphics g = Graphics.FromImage(bitmap);
-                //g.CopyFromScreen((new System.Drawing.Point(xOffset, yOffset)), new System.Drawing.Point(0, 0), bitmap.Size);
-                g.CopyFromScreen(new System.Drawing.Point(0, 0), new System.Drawing.Point(0, 0), new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height));
-                g.Dispose();
+                g.CopyFromScreen(new System.Drawing.Point(xOffset, yOffset), new System.Drawing.Point(0, 0), new Size(width, height));
+                //g.Dispose();
 
                 OnCapturesScreen(bitmap, null);
+                //bitmap.Dispose();
             }
         }
         public bool EnableCapturesScreen
